@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if ! [ -z "${PRIVATE_KEY}" ]; then
+    echo -e "${PRIVATE_KEY}" | gpg --import -
+fi
+
+if ! [ -z "${PRIVATE_KEY_FILE}" ]; then
+    gpg --import ${PRIVATE_KEY_FILE}
+fi
+
+if [ -n "$1" ]; then
+  exec sops "$@"
+else
+  sops --help
+fi
